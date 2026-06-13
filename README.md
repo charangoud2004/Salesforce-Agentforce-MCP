@@ -1,5 +1,57 @@
 # Salesforce Agentforce — MCP Utility
 
+
+# Salesforce Agentforce + MCP Demo
+
+## Part 1 — Agentforce Agent
+
+### What it does
+A Service Agent built in Salesforce Agentforce Builder that:
+- Accepts incoming customer support requests
+- Classifies urgency as low / medium / high / critical
+- Routes to the correct subagent automatically using Salesforce's built-in LLM
+
+### Subagents
+| Subagent | Handles |
+|---|---|
+| Case Management | Billing errors, technical problems, general service inquiries |
+| Critical Issue Escalation | Safety hazards, frustrated customers, critical system failures |
+
+### How Routing Works
+No code. Each subagent has a Classification Description in plain English. When a message comes in, Salesforce's LLM reads it, matches it to the closest description, and routes automatically.
+
+### Subagent Configuration
+
+**Case Management**
+- Classification Description: `This topic handles customer support requests including billing errors, incorrect charges, invoice issues, technical problems, product malfunctions, and general service inquiries`
+- Scope: `Billing, technical support, and general service inquiries`
+
+**Critical Issue Escalation**
+- Classification Description: `This topic handles urgent situations where the customer needs to be transferred to a live human agent, including critical system failures, safety hazards, highly frustrated customers, or repeated unresolved issues`
+- Scope: `Critical escalations and live human agent transfers`
+
+### Setup
+1. Provision a free [Salesforce Developer Edition org](https://developer.salesforce.com/)
+2. Enable Einstein and Agentforce in Setup
+3. Open Agentforce Builder → New Agent → Service Agent
+4. Add two subagents with Classification Descriptions above
+5. Activate and test via Conversation Preview
+
+### Test Results
+| Input | Routed To | Result |
+|---|---|---|
+| "My billing statement has an error" | Case Management | ✅ |
+| "My internet is not working" | Case Management | ✅ |
+| "I need help immediately, this is critical" | Critical Issue Escalation | ✅ |
+
+### Configuration Screenshots
+See `agentforce-config/` folder for:
+- Subagents overview
+- Case Management configuration
+- Critical Issue Escalation configuration
+- Live routing test results
+
+
 > **Part 2** — A custom MCP tool that lets AI assistants query Salesforce Cases by urgency level using natural language.
 
 ---
